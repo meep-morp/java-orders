@@ -77,8 +77,8 @@ public class SeedData implements CommandLineRunner
             agentFakers.add(new Agent(
                     faker.name().firstName(),
                     faker.address().country(),
-                    faker.number().randomDouble(3, 1, 9),
-                    String.valueOf(faker.phoneNumber()),
+                    faker.number().randomDouble(2, 1, 0),
+                    faker.phoneNumber().cellPhone(),
                     faker.address().cityPrefix()
             ));
         }
@@ -161,7 +161,7 @@ public class SeedData implements CommandLineRunner
                     faker.number().randomDouble(2, 2, 200000),
                     faker.number().randomDouble(2, 2, 200000),
                     faker.number().randomDouble(2, 2, 200000),
-                    String.valueOf(faker.phoneNumber()),
+                    faker.phoneNumber().cellPhone(),
                     agentFakers.get(faker.number().numberBetween(0, agentFakers.size() - 1))
             ));
         }
