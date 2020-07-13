@@ -73,22 +73,22 @@ The database will be available from the H2 Console. Each table will contain the 
 
 ## Instructions
 
-* [ ] Please fork and clone this repository. This repository does not have a starter project, so create one inside of the cloned repository folder. Regularly commit and push your code as appropriate.
+* [ x ] Please fork and clone this repository. This repository does not have a starter project, so create one inside of the cloned repository folder. Regularly commit and push your code as appropriate.
 
 ### MVP
 
-* [ ] Create the entities needed to store this data.
-* [ ] Seed the database
-  * [ ] A data.sql file has been provided with seed data. You can use this class directly or modify it to fit your models. However, the data found in the file is the seed data to use!
-  * [ ] A SeedData.java file has been provided seed data. You can use this class directly or modify it to fit your models. However, the data found in the file is the seed data to use!
-  * [ ] Your application should be able to easily switch between seeding with the data.sql data or the data from SeedData.java.
+* [ x ] Create the entities needed to store this data.
+* [ x ] Seed the database
+  * [ x ] A data.sql file has been provided with seed data. You can use this class directly or modify it to fit your models. However, the data found in the file is the seed data to use!
+  * [ x ] A SeedData.java file has been provided seed data. You can use this class directly or modify it to fit your models. However, the data found in the file is the seed data to use!
+  * [ x ] Your application should be able to easily switch between seeding with the data.sql data or the data from SeedData.java.
 
 ### Stretch Goal
 
-* [ ] Implement Javafaker
-  * [ ] Create around 100 new customers
-  * [ ] Randomize as much of the data as possible
-  * [ ] You can assign all new customers to the same agent
-  * [ ] Randomly assign 0 - 10 orders to each customer
-    * [ ] Randomize as much of the data as possible
-    * [ ] All orders can be of the same payment type
+* [ x ] Implement Javafaker
+  * [ x ] Create around 100 new customers
+  * [ x ] Randomize as much of the data as possible
+  * [ x ] You can assign all new customers to the same agent
+  * [ x ] Randomly assign 0 - 10 orders to each customer
+    * [ x ] Randomize as much of the data as possible
+    * [ x ] All orders can be of the same payment type
