@@ -1,6 +1,6 @@
 package com.lambdaschool.java_orders;
 
-//import com.github.javafaker.Faker;
+import com.github.javafaker.Faker;
 
 import com.lambdaschool.java_orders.models.Agent;
 import com.lambdaschool.java_orders.models.Customer;
@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Transactional
@@ -66,6 +69,23 @@ public class SeedData implements CommandLineRunner
         pay2 = paymentrepos.save(pay2);
         pay3 = paymentrepos.save(pay3);
         pay4 = paymentrepos.save(pay4);
+
+        Faker faker = new Faker();
+        List<Agent> agentFakers = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            agentFakers.add(new Agent(
+                    faker.name().firstName(),
+                    faker.address().country(),
+                    faker.number().randomDouble(3, 1, 9),
+                    String.valueOf(faker.phoneNumber()),
+                    faker.address().cityPrefix()
+            ));
+        }
+
+        for (Agent agent : agentFakers) {
+            agentsrepo.save(agent);
+        }
 
         Agent a01 = new Agent("Ramasundar",
             "Bangalore",
@@ -127,6 +147,28 @@ public class SeedData implements CommandLineRunner
             0.11,
             "008-22536178",
             "");
+
+        List<Customer> customerFakers = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            customerFakers.add(new Customer(
+                    faker.name().lastName(),
+                    faker.address().city(),
+                    faker.address().state(),
+                    faker.address().country(),
+                    String.valueOf(faker.number().numberBetween(1, 12)),
+                    faker.number().randomDouble(2, 2, 200000),
+                    faker.number().randomDouble(2, 2, 200000),
+                    faker.number().randomDouble(2, 2, 200000),
+                    faker.number().randomDouble(2, 2, 200000),
+                    String.valueOf(faker.phoneNumber()),
+                    agentFakers.get(faker.number().numberBetween(0, agentFakers.size() - 1))
+            ));
+        }
+
+        for (Customer customer : customerFakers) {
+            customersrepo.save(customer);
+        }
 
         Customer c01 = new Customer("Holmes",
             "London",
@@ -404,6 +446,22 @@ public class SeedData implements CommandLineRunner
             11000.00,
             "PPHGRTS",
             a10);
+
+        List<Order> orderFakers = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            orderFakers.add(new Order(
+                    faker.number().randomDouble(2, 2, 3000),
+                    faker.number().randomDouble(2, 2, 3000),
+                    customerFakers.get(faker.number().numberBetween(0, customerFakers.size() - 1)),
+                    faker.starTrek().character()
+            ));
+        }
+
+        for (Order order : orderFakers) {
+            order.addPayments(pay1);
+            ordersrepo.save(order);
+        }
 
         Order o01 = new Order(
                 1000.00,
