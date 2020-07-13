@@ -1,4 +1,4 @@
-package orders.src.main.java.com.lambdaschool.orders;
+package com.lambdaschool.java_orders;
 
 //import com.github.javafaker.Faker;
 
