@@ -37,7 +37,7 @@ public class CustomerServicesImpl implements CustomersServices {
     @Override
     public Customer findById(Long custid) {
         Customer c = customersrepo.findById(custid)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %l does not exist.", custid)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s does not exist.", custid)));
         return c;
     }
 
