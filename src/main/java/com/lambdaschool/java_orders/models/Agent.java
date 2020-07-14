@@ -22,9 +22,9 @@ public class Agent {
 
     private String workingarea;
 
-    @OneToMany( mappedBy = "agent",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
+    @OneToMany(mappedBy = "agent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Customer> customers = new ArrayList<>();
 
     //CONSTRUCTORS

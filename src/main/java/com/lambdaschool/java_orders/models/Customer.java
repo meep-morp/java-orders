@@ -38,9 +38,9 @@ public class Customer {
     private Agent agent;
 
     // Connect to orders here
-    @OneToMany( mappedBy = "customer",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
+    @OneToMany(mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     List<Order> orders = new ArrayList<>();
 
     // CONSTRUCTORS

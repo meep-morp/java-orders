@@ -25,9 +25,9 @@ public class Order {
 
     // Connect to payments here
     @ManyToMany()
-    @JoinTable( name = "orderspayments",
-                joinColumns = @JoinColumn(name = "ordnum"),
-                inverseJoinColumns = @JoinColumn(name = "paymentid"))
+    @JoinTable(name = "orderspayments",
+            joinColumns = @JoinColumn(name = "ordnum"),
+            inverseJoinColumns = @JoinColumn(name = "paymentid"))
     private Set<Payment> payments = new HashSet<>();
 
     // CONSTRUCTORS
