@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -22,5 +24,11 @@ public class OrderController {
         Order o = ordersServices.getById(id);
         return new ResponseEntity<>(o, HttpStatus.OK);
     }
-
+//    GET /orders/advanceamount - returns all orders with their customers that have an advanceamount greater than 0.
+    @GetMapping(value = "/advanceamount", produces = {"application/json"})
+    public ResponseEntity<?> getOrderByAdvanceAmount() {
+        List<Order> ordList = ordersServices.getByAdvanceAmount();
+        ordList.sort((o1, o2) -> (int) (o1.getAdvanceamount() - o2.getAdvanceamount()));
+        return new ResponseEntity<>(ordList, HttpStatus.OK);
+    }
 }
