@@ -43,6 +43,9 @@ public class Order {
         this.customer = customer;
     }
 
+    public Order() {
+    }
+
     // GETTERS AND SETTERS
     public Customer getCustomer() {
         return customer;
