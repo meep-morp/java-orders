@@ -58,6 +58,10 @@ public class SeedData implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String[] args) throws Exception {
+
+        agentsrepo.deleteAll();
+        paymentrepos.deleteAll();
+
         Payment pay1 = new Payment("Cash");
         Payment pay2 = new Payment("Gift Card");
         Payment pay3 = new Payment("Credit Card");

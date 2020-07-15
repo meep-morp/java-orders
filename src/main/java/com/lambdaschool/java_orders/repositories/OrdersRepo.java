@@ -9,4 +9,6 @@ public interface OrdersRepo extends CrudRepository<Order, Long> {
 
     List<Order> findByAdvanceamountGreaterThan(double amount);
 
+    void deleteByOrderdescriptionIgnoringCase(String name);
+
 }

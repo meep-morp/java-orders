@@ -58,38 +58,38 @@ public class CustomerServicesImpl implements CustomersServices {
         Customer currentCust = customersrepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s not found.", id)));
 
-        if(customers.getCustname() != null) {
+        if (customers.getCustname() != null) {
             currentCust.setCustname(customers.getCustname());
         }
-        if(customers.getCustcity() != null) {
+        if (customers.getCustcity() != null) {
             currentCust.setCustcity(customers.getCustcity());
         }
-        if(customers.getCustcountry() != null) {
+        if (customers.getCustcountry() != null) {
             currentCust.setCustcountry(customers.getCustcountry());
         }
-        if(customers.getGrade() != null) {
+        if (customers.getGrade() != null) {
             currentCust.setGrade(customers.getGrade());
         }
-        if(customers.openingAmtHasValue) {
+        if (customers.openingAmtHasValue) {
             currentCust.setOpeningamt(customers.getOpeningamt());
         }
-        if(customers.outstandingAmtHasValue) {
+        if (customers.outstandingAmtHasValue) {
             currentCust.setOutstandingamt(customers.getOutstandingamt());
         }
-        if(customers.paymentAmtHasValue) {
+        if (customers.paymentAmtHasValue) {
             currentCust.setPaymentamt(customers.getPaymentamt());
         }
-        if(customers.receiveAmtHasValue) {
+        if (customers.receiveAmtHasValue) {
             currentCust.setReceiveamt(customers.getReceiveamt());
         }
-        if(customers.getWorkingarea() != null) {
+        if (customers.getWorkingarea() != null) {
             currentCust.setWorkingarea(customers.getWorkingarea());
         }
-        if(customers.getAgent() != null) {
+        if (customers.getAgent() != null) {
             currentCust.setAgent(customers.getAgent());
         }
 
-        if(customers.getOrders().size() > 0) {
+        if (customers.getOrders().size() > 0) {
             currentCust.getOrders().clear();
             for (Order o : customers.getOrders()) {
                 Order newOrder = new Order(o.getOrdamount(), o.getAdvanceamount(), currentCust, o.getOrderdescription());
@@ -105,7 +105,7 @@ public class CustomerServicesImpl implements CustomersServices {
     public Customer save(Customer customers) {
         Customer newCust = new Customer();
 
-        if(customers.getCustcode() != 0) {
+        if (customers.getCustcode() != 0) {
             customersrepo.findById(customers.getCustcode())
                     .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s not found.", customers.getCustcode())));
 
