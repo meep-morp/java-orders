@@ -31,4 +31,9 @@ public class OrderController {
         ordList.sort((o1, o2) -> (int) (o1.getAdvanceamount() - o2.getAdvanceamount()));
         return new ResponseEntity<>(ordList, HttpStatus.OK);
     }
+//    POST /orders/order - adds a new order to an existing customer
+
+//    PUT /orders/order/{ordernum} - completely replaces the given order record
+
+//    DELETE /orders/order/{ordername} - deletes the given order
 }

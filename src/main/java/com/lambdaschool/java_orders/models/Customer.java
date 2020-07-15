@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@JsonIgnoreProperties({"openingAmtHasValue", "receiveAmtHasValue", "paymentAmtHasValue", "outstandingAmtHasValue"})
 public class Customer {
 
     @Id
@@ -24,12 +25,20 @@ public class Customer {
 
     private String grade;
 
+    @Transient
+    public boolean openingAmtHasValue = false;
     private double openingamt;
 
+    @Transient
+    public boolean receiveAmtHasValue = false;
     private double receiveamt;
 
+    @Transient
+    public boolean paymentAmtHasValue = false;
     private double paymentamt;
 
+    @Transient
+    public boolean outstandingAmtHasValue = false;
     private double outstandingamt;
 
     private String phone;

@@ -2,6 +2,7 @@ package com.lambdaschool.java_orders.services;
 
 
 import com.lambdaschool.java_orders.models.Customer;
+import com.lambdaschool.java_orders.models.Order;
 import com.lambdaschool.java_orders.repositories.CustomersRepo;
 import com.lambdaschool.java_orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,6 @@ public class CustomerServicesImpl implements CustomersServices {
 
     @Autowired
     private CustomersRepo customersrepo;
-
-    @Transactional
-
-    @Override
-    public Customer save(Customer customers) {
-        return customersrepo.save(customers);
-    }
 
     @Override
     public List<Customer> findAllCustomers() {
@@ -49,5 +43,92 @@ public class CustomerServicesImpl implements CustomersServices {
     @Override
     public List<OrderCounts> getOrderCounts() {
         return customersrepo.getOrderCounts();
+    }
+
+    @Transactional
+    @Override
+    public void delete(long id) {
+        customersrepo.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s not found.", id)));
+        customersrepo.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Customer update(Customer customers, long id) {
+        Customer currentCust = customersrepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s not found.", id)));
+
+        if(customers.getCustname() != null) {
+            currentCust.setCustname(customers.getCustname());
+        }
+        if(customers.getCustcity() != null) {
+            currentCust.setCustcity(customers.getCustcity());
+        }
+        if(customers.getCustcountry() != null) {
+            currentCust.setCustcountry(customers.getCustcountry());
+        }
+        if(customers.getGrade() != null) {
+            currentCust.setGrade(customers.getGrade());
+        }
+        if(customers.openingAmtHasValue) {
+            currentCust.setOpeningamt(customers.getOpeningamt());
+        }
+        if(customers.outstandingAmtHasValue) {
+            currentCust.setOutstandingamt(customers.getOutstandingamt());
+        }
+        if(customers.paymentAmtHasValue) {
+            currentCust.setPaymentamt(customers.getPaymentamt());
+        }
+        if(customers.receiveAmtHasValue) {
+            currentCust.setReceiveamt(customers.getReceiveamt());
+        }
+        if(customers.getWorkingarea() != null) {
+            currentCust.setWorkingarea(customers.getWorkingarea());
+        }
+        if(customers.getAgent() != null) {
+            currentCust.setAgent(customers.getAgent());
+        }
+
+        if(customers.getOrders().size() > 0) {
+            currentCust.getOrders().clear();
+            for (Order o : customers.getOrders()) {
+                Order newOrder = new Order(o.getOrdamount(), o.getAdvanceamount(), currentCust, o.getOrderdescription());
+                currentCust.getOrders().add(newOrder);
+            }
+        }
+
+        return customersrepo.save(currentCust);
+    }
+
+    @Transactional
+    @Override
+    public Customer save(Customer customers) {
+        Customer newCust = new Customer();
+
+        if(customers.getCustcode() != 0) {
+            customersrepo.findById(customers.getCustcode())
+                    .orElseThrow(() -> new EntityNotFoundException(String.format("Customer %s not found.", customers.getCustcode())));
+
+            newCust.setCustcode(customers.getCustcode());
+        }
+
+        newCust.setCustname(customers.getCustname());
+        newCust.setCustcity(customers.getCustcity());
+        newCust.setCustcountry(customers.getCustcountry());
+        newCust.setGrade(customers.getGrade());
+        newCust.setOpeningamt(customers.getOpeningamt());
+        newCust.setOutstandingamt(customers.getOutstandingamt());
+        newCust.setPaymentamt(customers.getPaymentamt());
+        newCust.setReceiveamt(customers.getReceiveamt());
+        newCust.setWorkingarea(customers.getWorkingarea());
+        newCust.setAgent(customers.getAgent());
+
+        newCust.getOrders().clear();
+        for (Order o : customers.getOrders()) {
+            Order newOrder = new Order(o.getOrdamount(), o.getAdvanceamount(), newCust, o.getOrderdescription());
+            newCust.getOrders().add(newOrder);
+        }
+
+        return customersrepo.save(newCust);
     }
 }

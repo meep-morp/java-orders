@@ -71,6 +71,14 @@ public class Order {
         this.ordnum = ordnum;
     }
 
+    public double getOrdamount() {
+        return ordamount;
+    }
+
+    public void setOrdamount(double ordamount) {
+        this.ordamount = ordamount;
+    }
+
     public double getAdvanceamount() {
         return advanceamount;
     }

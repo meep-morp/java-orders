@@ -4,13 +4,14 @@ import com.lambdaschool.java_orders.models.Customer;
 import com.lambdaschool.java_orders.services.CustomersServices;
 import com.lambdaschool.java_orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -46,4 +47,39 @@ public class CustomerController {
         List<OrderCounts> custList = customersServices.getOrderCounts();
         return new ResponseEntity<>(custList, HttpStatus.OK);
     }
+
+//    POST /customers/customer - Adds a new customer including any new orders
+        @PostMapping(value = "/customer", consumes = "application/json")
+        public ResponseEntity<?> addNewCustomer(@Valid @RequestBody Customer newCust){
+            newCust.setCustcode(0);
+            newCust = customersServices.save(newCust);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            URI newCustURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCust.getCustcode()).toUri();
+            responseHeaders.setLocation(newCustURI);
+
+            return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        }
+//    PUT /customers/customer/{custcode} - completely replaces the customer record including associated orders with the provided data
+    @PutMapping(value = "/customer/{id}", consumes = "application/json")
+    public ResponseEntity<?> replaceCustomer(@Valid @RequestBody Customer updateCust, @PathVariable long id) {
+        updateCust.setCustcode(id);
+        customersServices.save(updateCust);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//    PATCH /customers/customer/{custcode} - updates customers with the new data. Only the new data is to be sent from the frontend client.
+    @PatchMapping(value = "/customer/{custid}", consumes = "application/json")
+    public ResponseEntity<?> updatePartCustomer(@Valid @RequestBody Customer updateCust, @PathVariable long custid ) {
+        customersServices.update(updateCust, custid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+//    DELETE /customers/customer/{custcode} - Deletes the given customer including any associated orders
+    @DeleteMapping(value = "/customer/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable long id) {
+        customersServices.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
